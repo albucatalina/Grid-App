@@ -4,12 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -37,8 +42,26 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    TopicGrid(
+                        topics = DataSource.topics,
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
+            }
+        }
+    }
+
+    @Composable
+    fun TopicGrid(topics: List<Topic>, modifier: Modifier = Modifier){
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(count = 2),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = modifier
+        )
+        {
+            items(topics){ topic ->
+                TopicItem(topic = topic)
             }
         }
     }
@@ -46,14 +69,15 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun TopicItem(topic: Topic, modifier: Modifier = Modifier){
         ElevatedCard(
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            modifier = modifier.fillMaxWidth()
         )
         {
             Row {
                 Image(
                     painter = painterResource(id = topic.imageResourceId),
                     contentDescription = stringResource(id = topic.nameStringResourceId),
-                    modifier = Modifier.size(68.dp, 68.dp)
+                    modifier = modifier.size(68.dp, 68.dp)
                 )
                 Column(
                     modifier = Modifier
@@ -85,7 +109,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun TopicItemPreview(){
         GridAppTheme {
-            TopicItem(DataSource.topics[12])
+            TopicGrid(DataSource.topics)
         }
     }
 }
