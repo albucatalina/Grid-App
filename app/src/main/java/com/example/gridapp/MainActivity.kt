@@ -42,10 +42,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TopicGrid(
-                        topics = DataSource.topics,
-                        modifier = Modifier.padding(8.dp)
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                    ) {
+                        Text(
+                            text = "Available Courses",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Spacer(modifier = Modifier.padding(8.dp))
+                        TopicGrid(
+                            topics = DataSource.topics,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
                 }
             }
         }
@@ -109,7 +120,20 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun TopicItemPreview(){
         GridAppTheme {
-            TopicGrid(DataSource.topics)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text(
+                    text = "Available Courses",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Spacer(modifier = Modifier.padding(8.dp))
+                TopicGrid(
+                    topics = DataSource.topics,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
     }
 }
